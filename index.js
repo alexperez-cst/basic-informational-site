@@ -1,7 +1,41 @@
+const express = require('express');
+const fs = require('fs');
+const app = express();
+
+app.get('/', (req, res) => {
+  res.set('Content-Type', 'text/html');
+  fs.readFile('./index.html', (err, data) => {
+    res.send(data);
+  })
+})
+app.get('/about', (req, res) => {
+  res.set('Content-Type', 'text/html');
+  fs.readFile('./about.html', (err, data) => {
+    res.send(data);
+  })
+})
+app.get('/contact', (req, res) => {
+  res.set('Content-Type', 'text/html');
+  fs.readFile('./contact-me.html', (err, data) => {
+    res.send(data);
+  })
+})
+app.use((req, res) => {
+  res.set('Content-Type', 'text/html');
+  fs.readFile('./404.html', (err, data) => {
+    res.send(data);
+  })
+})
+
+app.listen(3000, () => {
+  console.log('Server opened at port 3000');
+})
+/*
+Pure NodeJS Implementation
+
 const http = require('http');
 const fs = require('fs');
 const url = require('url');
-
 http.createServer((req,res) => {
     const parsedUrl = url.parse(req.url,true);
     let route = './index.html';
@@ -27,3 +61,4 @@ http.createServer((req,res) => {
         }
     });
 }).listen(5040);
+*/
